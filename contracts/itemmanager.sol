@@ -1,11 +1,13 @@
 pragma solidity ^0.8.1;
 
+import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/access/Ownable.sol";
+
 import './item.sol';
 
 /**
  * The first thing we need is a "Management" Smart Contract, where we can add items
  */
-contract ItemManager {
+contract ItemManager is Ownable {
     //******** DATA STRUCTS ********
     enum SupplyChainState{ Created, Paid, Delivered }
 
@@ -28,7 +30,7 @@ contract ItemManager {
 
 
     //******** FUNCTIONS ********
-    function createItem( string memory _identifier, uint _itemPrice ) public {
+    function createItem( string memory _identifier, uint _itemPrice ) public onlyOwner {
         Item item = new Item(this, _itemPrice, itemIndex);
 
         items[itemIndex]._item = item;
@@ -50,7 +52,7 @@ contract ItemManager {
         emit SupplyChainStep( itemIndex, uint(items[itemIndex]._state), address(items[itemIndex]._item) );
     }
 
-    function triggerDelivery( uint _itemIndex ) public {
+    function triggerDelivery( uint _itemIndex ) public onlyOwner {
         require( items[_itemIndex]._state == SupplyChainState.Paid, "It is further down in the chain, try again" );
 
         items[_itemIndex]._state = SupplyChainState.Delivered;
