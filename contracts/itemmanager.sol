@@ -1,8 +1,7 @@
 pragma solidity ^0.8.1;
 
-import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/access/Ownable.sol";
-
-import './item.sol';
+import "./Ownable.sol";
+import './Item.sol';
 
 /**
  * The first thing we need is a "Management" Smart Contract, where we can add items

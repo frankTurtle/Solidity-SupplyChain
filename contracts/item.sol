@@ -1,6 +1,6 @@
 pragma solidity ^0.8.1;
 
-import './itemmanager.sol';
+import './ItemManager.sol';
 
 // Responsible for taking the payment and handing the transaction off to the Item Manager
 contract Item {
