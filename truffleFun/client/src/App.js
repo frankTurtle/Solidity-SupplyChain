@@ -36,6 +36,7 @@ const App = () => {
       Item.networks[networkId] && Item.networks[networkId].address,
     );
 
+    listenToPaymentEvent();
     setIsLoading(false);
 
   }, []);
@@ -47,6 +48,12 @@ const App = () => {
 
     console.log(result);
     alert("Send " + cost + " Wei to " + result.events.SupplyChainStep.returnValues._itemAddress);
+  }
+
+  const listenToPaymentEvent = () => {
+    itemManager.current.events.SupplyChainStep().on("data", async event => {
+      console.log('PAYMENT EVENT!', event);
+    })
   }
 
   return (
